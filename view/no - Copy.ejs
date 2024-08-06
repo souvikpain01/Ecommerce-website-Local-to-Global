@@ -1,0 +1,100 @@
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    const userId = '<%= user._id %>'; // Assuming you have user data available
+    
+    // Function to populate cart items
+    async function populateCart() {
+      const response = await fetch(`/cart/${userId}`);
+      const cart = await response.json();
+      const cartTable = document.getElementById('cart-table');
+      let subtotal = 0;
+  
+      // Clear previous items
+      cartTable.innerHTML = `
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      `;
+      
+      cart.items.forEach(item => {
+        const subtotalPrice = item.price * item.quantity;
+        subtotal += subtotalPrice;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <div class="cart-info">
+              <img src="/images/product-placeholder.jpg" alt="${item.name}" />
+              <div>
+                <p>${item.name}</p>
+                <span>Price: $${item.price.toFixed(2)}</span> <br />
+                <a href="#" class="remove-item" data-id="${item.productId}">remove</a>
+                </div>
+                </div>
+                </td>
+          <td><input type="number" value="${item.quantity}" min="1" class="cart-quantity" data-id="${item.productId}" /></td>
+          <td>$${subtotalPrice.toFixed(2)}</td>
+        `;
+        cartTable.appendChild(row);
+      });
+      
+      // Update total price
+      const tax = subtotal * 0.1;
+      const total = subtotal + tax;
+      document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+      document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+      
+      // Remove item logic
+      document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', async function() {
+          const productId = this.getAttribute('data-id');
+          await fetch('/cart/remove', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId, productId })
+          });
+          populateCart();
+        });
+      });
+  
+      // Update quantity logic
+      document.querySelectorAll('.cart-quantity').forEach(input => {
+        input.addEventListener('change', async function() {
+          const productId = this.getAttribute('data-id');
+          const newQuantity = parseInt(this.value);
+          await fetch('/cart/update', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId, productId, quantity: newQuantity })
+          });
+          populateCart();
+        });
+      });
+    }
+  
+    // Initial population of cart items
+    populateCart();
+  
+    // Proceed to checkout button click event
+    document.getElementById('checkout-btn').addEventListener('click', async () => {
+      const response = await fetch('/buy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId })
+      });
+      const data = await response.json();
+      alert(data.message); // Alert the response message
+      populateCart(); // Refresh the cart after purchase
+    });
+    });
+
+  </script> -->
